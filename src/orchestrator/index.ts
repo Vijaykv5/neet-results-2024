@@ -52,14 +52,14 @@ app.post("/result", async (req, res) => {
     }
   });
 
-  await db.applicationNumber.update({
-    where: {
-      id: applicationNumber
-    },
-    data: {
-      solved: true
-    }
-  });
+//   await db.applicationNumber.update({
+//     where: {
+//       id: applicationNumber
+//     },
+//     data: {
+//       solved: true
+//     }
+//   });
 
   res.json({});
 });
