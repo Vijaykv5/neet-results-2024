@@ -10,13 +10,7 @@ const PICKUP_BACKOFF_TIME_MS = 1000 * 60 * 60 * 2; // 2 hours
 app.get("/next", async (req, res) => {
   const nextApplicationNumber = await db.applicationNumber.findFirst({
     where: {
-        OR: [{
-            pickupTime: {
-                lt: new Date(Date.now() + PICKUP_BACKOFF_TIME_MS) // last picked up 2 hours ago
-            }
-        }, {
-            pickupTime: null
-        }]
+       pickupTime: null
     }
   });
   if (!nextApplicationNumber) {
@@ -61,4 +55,9 @@ app.post("/result", async (req, res) => {
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
+});
+
+app.get("/total", async (req, res) => {
+  const total = await db.result.count();
+  res.json({ total });
 });
