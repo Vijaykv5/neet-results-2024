@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: neet-scrape
-          image: 100xdevs/neet-worker:latest
+          image: 100xdevs/neet:latest
           env:
             - name: ORCHESTRATOR_URL
               value: "https://neet-orchestrator.100xdevs.com"

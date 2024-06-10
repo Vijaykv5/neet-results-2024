@@ -69,6 +69,12 @@ app.listen(3000, () => {
 });
 
 app.get("/total", async (req, res) => {
-  const total = await db.result.count();
-  res.json({ total });
+  const total = await db.result.findMany({
+    where: {
+        marks: {
+            not: null
+        }
+    }
+  });
+  res.json({ len: total.length, total });
 });
