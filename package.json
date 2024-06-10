@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -b",
+    "start:orchestrator": "node dist/orchestrator/index.js",
+    "start:worker": "node dist/worker/index.js",
+    "bootstrap": "node dist/bootstrap/index.js",    
   },
   "keywords": [],
   "author": "",
