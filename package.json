@@ -7,7 +7,7 @@
     "build": "tsc -b",
     "start:orchestrator": "node dist/orchestrator/index.js",
     "start:worker": "node dist/worker/index.js",
-    "bootstrap": "node dist/bootstrap/index.js",    
+    "bootstrap": "node dist/bootstrap/index.js"
   },
   "keywords": [],
   "author": "",
