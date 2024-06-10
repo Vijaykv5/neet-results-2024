@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: neet-scrape
+  labels:
+    app: neet-scrape
+spec:
+  replicas: 40
+  selector:
+    matchLabels:
+      app: neet-scrape
+  template:
+    metadata:
+      labels:
+        app: neet-scrape
+    spec:
+      containers:
+        - name: neet-scrape
+          image: 100xdevs/neet-worker:latest
+          env:
+            - name: ORCHESTRATOR_URL
+              value: "https://neet-orchestrator.100xdevs.com"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi

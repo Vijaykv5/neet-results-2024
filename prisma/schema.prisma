@@ -30,6 +30,7 @@ model Result {
   applicationNumber String
   candidateName String
   allIndiaRank String
+  marks     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

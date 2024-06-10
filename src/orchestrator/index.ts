@@ -32,7 +32,7 @@ app.get("/next", async (req, res) => {
 });
 
 app.post("/result", async (req, res) => {
-  const { applicationNumber, candidateName, allIndiaRank, day, month, year } = req.body;
+  const { applicationNumber, candidateName, allIndiaRank, day, month, year, marks } = req.body;
   const result = await sendRequest(day, month, year, applicationNumber);
 
   if (!result.solved) {
@@ -47,9 +47,20 @@ app.post("/result", async (req, res) => {
       allIndiaRank,
       day,
       month,
-      year
+      year,
+      marks
     }
   });
+
+  await db.applicationNumber.update({
+    where: {
+      id: applicationNumber
+    },
+    data: {
+      solved: true
+    }
+  });
+
   res.json({});
 });
 

@@ -6,6 +6,7 @@ interface IRequest {
     candidateName?: string;
     allIndiaRank?: string;
     solved: boolean;
+    marks?: string;
 }
 
 export function sendRequest(day: string, month: string, year: string, applicationNumber: string): Promise<IRequest>{
@@ -61,14 +62,18 @@ export function sendRequest(day: string, month: string, year: string, applicatio
             
             // Find the All India Rank
             const allIndiaRank = $('td:contains("NEET All India Rank")').next('td').text().trim() || 'N/A';
+
+            const marks = $('td:contains("Total Marks Obtained (out of 720)")').next('td').text().trim() || 'N/A';
             
             console.log(`Application Number: ${applicationNumber}`);
             console.log(`Candidate's Name: ${candidateName}`);
-            console.log(`All India Rank: ${allIndiaRank}`);    
+            console.log(`All India Rank: ${allIndiaRank}`); 
+            console.log(`Marks: ${marks}`);
             resolve({
                 candidateName,
                 allIndiaRank,
-                solved: true
+                solved: true,
+                marks
             });
 
         })

@@ -1,7 +1,7 @@
 import axios from 'axios'; 
 import { sendRequest } from './sendRequest';
 
-const ORCHESTRATOR_URL = 'http://localhost:3000';
+const ORCHESTRATOR_URL = process.env.ORCHESTRATOR_URL || "https://neet-orchestrator.100xdevs.com";
 
 async function findRank(applicationNumber: string) {
     console.log(`Finding rank for ${applicationNumber}`);
@@ -19,12 +19,13 @@ async function findRank(applicationNumber: string) {
         }
     }
 
-    const BATCH_SIZE = 25;
+    const BATCH_SIZE = Number(process.env.BATCH_SIZE) ||  50;
 
     let done = false;
 
     for (let i = 0; i < args.length; i += BATCH_SIZE) {
         const batch = args.slice(i, i + BATCH_SIZE);
+        const startTime = Date.now();
         await Promise.all(batch.map(async (arg) => {
             const res = await sendRequest(arg.day, arg.month, arg.year, arg.applicationNumber);
             if (res.solved) {
@@ -37,7 +38,8 @@ async function findRank(applicationNumber: string) {
                     allIndiaRank: res.allIndiaRank,
                     day: arg.day,
                     month: arg.month,
-                    year: arg.year
+                    year: arg.year,
+                    marks: res.marks
                 }).then(x => {
                     console.log("Result stored");
                 }).catch(e => {
@@ -45,6 +47,8 @@ async function findRank(applicationNumber: string) {
                 });
             }
         }));
+        const endTime = Date.now();
+        console.log(`Batch ${i} took ${endTime - startTime}ms`);
         if (done) {
             break;
         }
